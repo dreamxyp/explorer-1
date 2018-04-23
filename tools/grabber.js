@@ -1,31 +1,30 @@
 require( '../db.js' );
-var etherUnits = require("../lib/etherUnits.js");
+var hucUnits = require("../lib/hucUnits.js");
 var BigNumber = require('bignumber.js');
 
-var fs = require('fs');
+var fs   = require('fs');
 
-var Web3 = require('web3');
+var Webu = require('webu');
 
 var mongoose = require( 'mongoose' );
 var Block     = mongoose.model( 'Block' );
 var Transaction     = mongoose.model( 'Transaction' );
 
 var grabBlocks = function(config) {
-    var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:' + 
-        config.gethPort.toString()));
+    var webu = new Webu(new Webu.providers.HttpProvider('http://localhost:' + config.ghucPort.toString()));
 
 
     if('listenOnly' in config && config.listenOnly === true) 
-        listenBlocks(config, web3);
+        listenBlocks(config, webu);
     else
         setTimeout(function() {
-            grabBlock(config, web3, config.blocks.pop());
+            grabBlock(config, webu, config.blocks.pop());
         }, 2000);
 
 }
 
-var listenBlocks = function(config, web3) {
-    var newBlocks = web3.eth.filter("latest");
+var listenBlocks = function(config, webu) {
+    var newBlocks = webu.huc.filter("latest");
     newBlocks.watch(function (error, log) {
 
         if(error) {
@@ -33,13 +32,13 @@ var listenBlocks = function(config, web3) {
         } else if (log == null) {
             console.log('Warning: null block hash');
         } else {
-            grabBlock(config, web3, log);
+            grabBlock(config, webu, log);
         }
 
     });
 }
 
-var grabBlock = function(config, web3, blockHashOrNumber) {
+var grabBlock = function(config, webu, blockHashOrNumber) {
     var desiredBlockHashOrNumber;
 
     // check if done
@@ -61,9 +60,9 @@ var grabBlock = function(config, web3, blockHashOrNumber) {
         desiredBlockHashOrNumber = blockHashOrNumber;
     }
 
-    if(web3.isConnected()) {
+    if(webu.isConnected()) {
 
-        web3.eth.getBlock(desiredBlockHashOrNumber, true, function(error, blockData) {
+        webu.huc.getBlock(desiredBlockHashOrNumber, true, function(error, blockData) {
             if(error) {
                 console.log('Warning: error on getting block with hash/number: ' +
                     desiredBlockHashOrNumber + ': ' + error);
@@ -97,10 +96,10 @@ var grabBlock = function(config, web3, blockHashOrNumber) {
                         )
                     ) {
                         blockHashOrNumber['end'] = blockData['number'] - 1;
-                        grabBlock(config, web3, blockHashOrNumber);
+                        grabBlock(config, webu, blockHashOrNumber);
                     }
                     else {
-                        grabBlock(config, web3, config.blocks.pop());
+                        grabBlock(config, webu, config.blocks.pop());
                     }
                 }
                 else {
@@ -111,7 +110,7 @@ var grabBlock = function(config, web3, blockHashOrNumber) {
         });
     }
     else {
-        console.log('Error: Aborted due to web3 is not connected when trying to ' +
+        console.log('Error: Aborted due to webu is not connected when trying to ' +
             'get block ' + desiredBlockHashOrNumber);
         process.exit(9);
     }
@@ -168,23 +167,18 @@ var writeTransactionsToDB = function(config, blockData) {
         for (d in blockData.transactions) {
             var txData = blockData.transactions[d];
             txData.timestamp = blockData.timestamp;
-            txData.value = etherUnits.toEther(new BigNumber(txData.value), 'wei');
+            txData.value = hucUnits.toHuc(new BigNumber(txData.value), 'wei');
             bulkOps.push(txData);
         }
         Transaction.collection.insert(bulkOps, function( err, tx ){
             if ( typeof err !== 'undefined' && err ) {
-                if (err.code == 11000) {
-                    console.log('Skip: Duplicate key ' + 
-                    err);
+                if (err.code == 11000) { console.log('Skip: Duplicate key ' +   err);
                 } else {
-                   console.log('Error: Aborted due to error: ' + 
-                        err);
+                   console.log('Error: Aborted due to error: ' +  err);
                    process.exit(9);
                }
             } else if(!('quiet' in config && config.quiet === true)) {
-                console.log('DB successfully written for block ' +
-                    blockData.transactions.length.toString() );
-                
+                console.log('DB successfully written for block ' + blockData.transactions.length.toString() );
             }
         });
     }
@@ -194,16 +188,17 @@ var writeTransactionsToDB = function(config, blockData) {
   Patch Missing Blocks
 */
 var patchBlocks = function(config) {
-    var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:' + 
-        config.gethPort.toString()));
+
+    // console.log(webu);
+    var webu = new webu(new webu.currentProvider.HttpProvider('http://localhost:' + config.ghucPort.toString()));
 
     // number of blocks should equal difference in block numbers
     var firstBlock = 0;
-    var lastBlock = web3.eth.blockNumber;
-    blockIter(web3, firstBlock, lastBlock, config);
+    var lastBlock = webu.huc.blockNumber;
+    blockIter(webu, firstBlock, lastBlock, config);
 }
 
-var blockIter = function(web3, firstBlock, lastBlock, config) {
+var blockIter = function(webu, firstBlock, lastBlock, config) {
     // if consecutive, deal with it
     if (lastBlock < firstBlock)
         return;
@@ -211,25 +206,25 @@ var blockIter = function(web3, firstBlock, lastBlock, config) {
         [lastBlock, firstBlock].forEach(function(blockNumber) {
             Block.find({number: blockNumber}, function (err, b) {
                 if (!b.length)
-                    grabBlock(config, web3, firstBlock);
+                    grabBlock(config, webu, firstBlock);
             });
         });
     } else if (lastBlock === firstBlock) {
         Block.find({number: firstBlock}, function (err, b) {
             if (!b.length)
-                grabBlock(config, web3, firstBlock);
+                grabBlock(config, webu, firstBlock);
         });
     } else {
 
         Block.count({number: {$gte: firstBlock, $lte: lastBlock}}, function(err, c) {
           var expectedBlocks = lastBlock - firstBlock + 1;
           if (c === 0) {
-            grabBlock(config, web3, {'start': firstBlock, 'end': lastBlock});
+            grabBlock(config, webu, {'start': firstBlock, 'end': lastBlock});
           } else if (expectedBlocks > c) {
             console.log("Missing: " + JSON.stringify(expectedBlocks - c));  
             var midBlock = firstBlock + parseInt((lastBlock - firstBlock)/2); 
-            blockIter(web3, firstBlock, midBlock, config);
-            blockIter(web3, midBlock + 1, lastBlock, config);
+            blockIter(webu, firstBlock, midBlock, config);
+            blockIter(webu, midBlock + 1, lastBlock, config);
           } else 
             return;
         })
@@ -238,18 +233,18 @@ var blockIter = function(web3, firstBlock, lastBlock, config) {
 
 
 /** On Startup **/
-// geth --rpc --rpcaddr "localhost" --rpcport "8545"  --rpcapi "eth,net,web3"
+// ghuc --rpc --rpcaddr "localhost" --rpcport "8545"  --rpcapi "huc,net,webu"
 
 var config = {};
 
 try {
     var configContents = fs.readFileSync('config.json');
+    console.log('configContents:',configContents);
     config = JSON.parse(configContents);
 }
 catch (error) {
     if (error.code === 'ENOENT') {
-        console.log('No config file found. Using default configuration (will ' + 
-            'download all blocks starting from latest)');
+        console.log('No config file found. Using default configuration (will download all blocks starting from latest)');
     }
     else {
         throw error;
@@ -257,9 +252,9 @@ catch (error) {
     }
 }
 
-// set the default geth port if it's not provided
-if (!('gethPort' in config) || (typeof config.gethPort) !== 'number') {
-    config.gethPort = 8545; // default
+// set the default ghuc port if it's not provided
+if (!('ghucPort' in config) || (typeof config.ghucPort) !== 'number') {
+    config.ghucPort = 8545; // default
 }
 
 // set the default output directory if it's not provided

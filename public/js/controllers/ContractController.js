@@ -9,7 +9,7 @@ angular.module('BlocksApp').controller('ContractController', function($statePara
     //fetch compiler options
     $scope.compilerVersions = [];
 
-    $.getJSON('https://ethereum.github.io/solc-bin/bin/list.json').done(function (data) {
+    $.getJSON('https://happyuc-project.github.io/solc-bin/bin/list.json').done(function (data) {
       function buildVersion (build) {
         if (build.prerelease && build.prerelease.length > 0) {
           return build.version + '-' + build.prerelease
@@ -54,7 +54,7 @@ angular.module('BlocksApp').controller('ContractController', function($statePara
         var contractReq = $scope.contract;
         contractReq.action = "compile";
 
-        // send to web3 for validation
+        // send to webu for validation
         $http({
           method: 'POST',
           url: '/compile',

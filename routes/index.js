@@ -7,7 +7,7 @@ var filters = require('./filters');
 var async = require('async');
 
 module.exports = function(app){
-  var web3relay = require('./web3relay');
+  var weburelay = require('./weburelay');
 
   var DAO = require('./dao');
   var Token = require('./token');
@@ -29,7 +29,7 @@ module.exports = function(app){
 
   app.post('/daorelay', DAO);
   app.post('/tokenrelay', Token);  
-  app.post('/web3relay', web3relay.data);
+  app.post('/weburelay', weburelay.data);
   app.post('/compile', compile);
 
   app.post('/fiat', fiat);

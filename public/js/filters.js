@@ -1,6 +1,6 @@
 var getDifficulty = function(hashes) {
   /*
-    borrowed from https://github.com/cubedro/eth-netstats :D
+    borrowed from https://github.com/cubedro/huc-netstats :D
   */
 
   var result = 0;

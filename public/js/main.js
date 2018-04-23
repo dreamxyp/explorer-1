@@ -43,7 +43,7 @@ BlocksApp.factory('setupObj', ['$rootScope', '$http', function($rootScope, $http
 BlocksApp.controller('MainController', ['$scope', '$rootScope', function($scope, $rootScope) {
     $scope.$on('$viewContentLoaded', function() {
         //App.initComponents(); // init core components
-        //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
+        //Layout.init(); //  Init entire layout(header, footer, sidebar, huc) on page load if the partials included in server side instead of loading with ng-include directive 
     });
 }]);
 
@@ -210,7 +210,7 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
                     var bundle = '/js/stats/bundle_';
 
                     switch ($stateParams.chart) {
-                        case "etc_hashrate":
+                        case "huc_hashrate":
                             bundle = bundle + "hashrate.js";
                             break;
                         case "miner_hashrate":

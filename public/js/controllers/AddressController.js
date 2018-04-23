@@ -12,10 +12,10 @@ angular.module('BlocksApp').controller('AddressController', function($stateParam
     $scope.addr = {"balance": 0, "count": 0};
     $scope.settings = $rootScope.setup;
 
-    //fetch web3 stuff
+    //fetch webu stuff
     $http({
       method: 'POST',
-      url: '/web3relay',
+      url: '/weburelay',
       data: {"addr": $scope.addrHash, "options": ["balance", "count", "bytecode"]}
     }).success(function(data) {
       $scope.addr = data;
@@ -86,7 +86,7 @@ angular.module('BlocksApp').controller('AddressController', function($stateParam
     var fetchInternalTxs = function() {
       $http({
         method: 'POST',
-        url: '/web3relay',
+        url: '/weburelay',
         data: {"addr_trace": $scope.addrHash}
       }).success(function(data) {
         $scope.internal_transactions = data;

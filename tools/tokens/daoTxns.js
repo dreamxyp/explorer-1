@@ -4,8 +4,8 @@
     Thing to get history of DAO transactions
 */
 
-var Web3 = require("web3");
-var web3;
+var webu = require("webu");
+var webu;
 var async = require('async');
 
 require( '../../db.js' );
@@ -17,20 +17,20 @@ var DAOCreatedToken = mongoose.model('DAOCreatedToken');
 var DAOTransferToken = mongoose.model('DAOTransferToken');
 var InternalTx     = mongoose.model( 'InternalTransaction' );
 
-if (typeof web3 !== "undefined") {
-  web3 = new Web3(web3.currentProvider);
+if (typeof webu !== "undefined") {
+  webu = new webu(webu.currentProvider);
 } else {
-  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+  webu = new webu(new webu.providers.HttpProvider("http://localhost:8545"));
 }
 
-if (web3.isConnected()) 
-  console.log("Web3 connection established");
+if (webu.isConnected()) 
+  console.log("webu connection established");
 else
   throw "No connection";
 
 
 var daoABI = [{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_amount","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_amount","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"value","type":"uint256"}],"name":"FuelingToDate","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"CreatedToken","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Refund","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"proposalID","type":"uint256"},{"indexed":false,"name":"recipient","type":"address"},{"indexed":false,"name":"amount","type":"uint256"},{"indexed":false,"name":"newCurator","type":"bool"},{"indexed":false,"name":"description","type":"string"}],"name":"ProposalAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"proposalID","type":"uint256"},{"indexed":false,"name":"position","type":"bool"},{"indexed":true,"name":"voter","type":"address"}],"name":"Voted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"proposalID","type":"uint256"},{"indexed":false,"name":"result","type":"bool"},{"indexed":false,"name":"quorum","type":"uint256"}],"name":"ProposalTallied","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_newCurator","type":"address"}],"name":"NewCurator","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_recipient","type":"address"},{"indexed":false,"name":"_allowed","type":"bool"}],"name":"AllowedRecipientChanged","type":"event"}];
-var daoContract = web3.eth.contract(daoABI);
+var daoContract = webu.huc.contract(daoABI);
 var DAO = daoContract.at("0xbb9bc244d798123fde783fcc1c72d3bb8c189413");
 
 var creationBlock = 1428757;
@@ -103,7 +103,7 @@ var populateTransferTokens = function () {
             continue;
           }
           try {
-            var block = web3.eth.getBlock(log[l].blockNumber);
+            var block = webu.huc.getBlock(log[l].blockNumber);
             newToken.timestamp = block.timestamp;
           } catch (e) {
             console.error(e);
@@ -160,7 +160,7 @@ var patchTimestamps = function(collection) {
     collection.find({timestamp: null}).forEach(function(doc) {
       setTimeout(function() {
         try {
-          var block = web3.eth.getBlock(doc.blockNumber);
+          var block = webu.huc.getBlock(doc.blockNumber);
         } catch (e) {
           console.error(e); return;
         }
@@ -209,7 +209,7 @@ InternalTx.collection.count({timestamp: null}, function(err, c) {
 
 var min;
 
-var max = web3.eth.blockNumber;
+var max = webu.huc.blockNumber;
 
 setInterval(function() {
   InternalTx.findOne({"timestamp": null}, "blockNumber")

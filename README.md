@@ -1,14 +1,14 @@
-# ETCExplorer 
+# HUCExplorer 
 
 <b>Live Version: [etherhub.io](http://etherhub.io)</b>
 
-Follow the project progress at: [ETC Block Explorer Development](https://trello.com/b/W3ftl57z/etc-block-explorer-development) 
+Follow the project progress at: [HUC Block Explorer Development](https://trello.com/b/W3ftl57z/etc-block-explorer-development) 
 
 ## Local installation
 
 Clone the repo
 
-`git clone https://github.com/ethereumproject/explorer`
+`git clone https://github.com/happyuc-project/explorer`
 
 Download [Nodejs and npm](https://docs.npmjs.com/getting-started/installing-node "Nodejs install") if you don't have them
 
@@ -31,15 +31,15 @@ Configuration file: `/tools/config.json`
 Basic settings:
 ```json
 {
-    "gethPort": 8545, 
+    "ghucPort": 8545, 
     "blocks": [ {"start": 2000000, "end": "latest"}],
     "quiet": false,
     "terminateAtExistingDB": false,
     "listenOnly": false,
     "settings": {
-        "symbol": "ETC",
-        "name": "Ethereum Classic",
-        "title": "Ethereum Classic Block Explorer",
+        "symbol": "HUC",
+        "name": "Huceum Classic",
+        "title": "Huceum Classic Block Explorer",
         "author": "Elaine"
     }
 }
@@ -52,7 +52,7 @@ Basic settings:
 
 ```quiet``` prints out the log of what it is doing.
 
-```listenOnly``` When true, the grabber will create a filter to receive the latest blocks from geth as they arrive. It will <b>not</b> continue to populate older block numbers. 
+```listenOnly``` When true, the grabber will create a filter to receive the latest blocks from ghuc as they arrive. It will <b>not</b> continue to populate older block numbers. 
 
 <b>Note: When ```listenOnly``` is set to ```true```, the ```blocks``` option is ignored. </b>
 

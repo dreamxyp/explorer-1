@@ -1,29 +1,29 @@
 <div class="col-md-12">
   <div class="row" style="margin-bottom:20px;" ng-show="!contract.valid">
-    <span class="eth-stat" >
+    <span class="huc-stat" >
     <i style="color: red" class="fa fa-wheelchair"></i> Contract Source Code Unverified
     </span><br>
-    <span class="eth-stat-text"><a href="/contract/{{addrHash}}">Verify And Publish Source Code.</a></span>
+    <span class="huc-stat-text"><a href="/contract/{{addrHash}}">Verify And Publish Source Code.</a></span>
   </div>
 
   <div class="row" ng-show="contract.valid">
-    <p class="eth-stat">
+    <p class="huc-stat">
     <i style="color: green" class="fa fa-check-circle-o"></i> Contract Source Code Verified
     </p>
   </div>
   <div class="row" ng-show="contract.valid">
     <div class="col-md-6 center">
-      <div class="eth-stat">
+      <div class="huc-stat">
           <div class="margin-top-20">
-          <span class="eth-stat-text">Contract Name: </span>
+          <span class="huc-stat-text">Contract Name: </span>
           <span ng-model="contract.contractName">{{contract.contractName}}</span>
           </div>
           <div class="margin-top-20">
-          <span class="eth-stat-text">Compiler Version: </span>
+          <span class="huc-stat-text">Compiler Version: </span>
           <span ng-model="contract.compilerVersion">{{contract.compilerVersion}}</span>
           </div>
           <div class="margin-top-20">
-          <span class="eth-stat-text">Optimization Enabled: </span>
+          <span class="huc-stat-text">Optimization Enabled: </span>
           <span ng-model="contract.optimization">{{contract.optimization}}</span>
           </div>
       </div>

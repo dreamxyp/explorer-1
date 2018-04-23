@@ -4,14 +4,14 @@
     Endpoint for client interface with ERC-20 tokens
 */
 
-var eth = require('./web3relay').eth;
+var huc = require('./weburelay').huc;
 
 var BigNumber = require('bignumber.js');
-var etherUnits = require(__lib + "etherUnits.js")
+var hucUnits  = require(__lib + "hucUnits.js")
 
 const ABI = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"}];
 
-const Contract = eth.contract(ABI);
+const Contract = huc.contract(ABI);
 
 
 module.exports = function(req, res){
@@ -25,21 +25,23 @@ module.exports = function(req, res){
     res.status(400).send();
   else if (req.body.action=="info") {
     try {
-      var actualBalance = eth.getBalance(contractAddress);
-      actualBalance = etherUnits.toEther(actualBalance, 'wei');
+      var actualBalance = huc.getBalance(contractAddress);
+          actualBalance = hucUnits.toHuc(actualBalance, 'wei');
       var totalSupply = Token.totalSupply();
-      // totalSupply = etherUnits.toEther(totalSupply, 'wei')*100;
+      // totalSupply = hucUnits.toHuc(totalSupply, 'wei')*100;
+      
       var decimals = Token.decimals();
-      var name = Token.name();
-      var symbol = Token.symbol();
-      var count = eth.getTransactionCount(contractAddress);
+      var name     = Token.name();
+      var symbol   = Token.symbol();
+
+      var count = huc.getTransactionCount(contractAddress);
       var tokenData = {
         "balance": actualBalance,
         "total_supply": totalSupply,
         "count": count,
         "name": name,
         "symbol": symbol,
-        "bytecode": eth.getCode(contractAddress)
+        "bytecode": huc.getCode(contractAddress)
       }
       res.write(JSON.stringify(tokenData));
       res.end();
@@ -50,7 +52,7 @@ module.exports = function(req, res){
     var addr = req.body.user.toLowerCase();
     try {
       var tokens = Token.balanceOf(addr);
-      // tokens = etherUnits.toEther(tokens, 'wei')*100;
+      // tokens = hucUnits.toHuc(tokens, 'wei')*100;
       res.write(JSON.stringify({"tokens": tokens}));
       res.end();
     } catch (e) {

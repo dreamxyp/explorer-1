@@ -24,17 +24,17 @@ img.logo-default {
     overflow:hidden;
     text-overflow: ellipsis;
 }
-.eth-stat {
+.huc-stat {
     padding-bottom: 20px;
     font-size: 14px;
     font-weight: 600;
     color: #7f90a4;
 }
-.eth-stat-title {
+.huc-stat-title {
     font-size: 25px;
     text-align: center;
 }
-.eth-stat-text {
+.huc-stat-text {
     color: #5b9bd1;
     font-size: 13px;
     font-weight: 800;

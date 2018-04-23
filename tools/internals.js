@@ -5,8 +5,8 @@
 require( '../db-internal.js' );
 
 var http = require('http');
-var Web3 = require('web3');
-var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+var Webu = require('webu');
+var webu = new webu(new webu.providers.HttpProvider("http://localhost:8545"));
 
 var mongoose = require( 'mongoose' );
 var InternalTx     = mongoose.model( 'InternalTransaction' );
@@ -14,8 +14,8 @@ var InternalTx     = mongoose.model( 'InternalTransaction' );
 const BATCH_SIZE = 10;
 
 function grabInternalTxs(batchNum, batchSize) {
-  var fromBlock = web3.toHex(batchNum);
-  var toBlock = web3.toHex(batchNum + batchSize - 1);
+  var fromBlock = webu.toHex(batchNum);
+  var toBlock = webu.toHex(batchNum + batchSize - 1);
   var post_data = '{ \
     "jsonrpc":"2.0", \
     "method":"trace_filter", \
@@ -71,13 +71,13 @@ function grabInternalTxs(batchNum, batchSize) {
             else if (j.result.suicide)
               j.result = j.result.suicide;
             if (j.action.gas)
-              j.action.gas = web3.toDecimal(j.action.gas);
+              j.action.gas = webu.toDecimal(j.action.gas);
             if (j.result.gasUsed)
-              j.result.gasUsed = web3.toDecimal(j.result.gasUsed);
-            j.subtraces = web3.toDecimal(j.subtraces);
-            j.transactionPosition = web3.toDecimal(j.transactionPosition);
-            j.blockNumber = web3.toDecimal(j.blockNumber);
-            var block = web3.eth.getBlock(j.blockNumber);
+              j.result.gasUsed = webu.toDecimal(j.result.gasUsed);
+            j.subtraces = webu.toDecimal(j.subtraces);
+            j.transactionPosition = webu.toDecimal(j.transactionPosition);
+            j.blockNumber = webu.toDecimal(j.blockNumber);
+            var block = webu.huc.getBlock(j.blockNumber);
             j.timestamp = block.timestamp;
             writeTxToDB(j);
           }
@@ -140,7 +140,7 @@ setInterval(function() {
       InternalTx.findOne({}, "blockNumber").lean(true).sort("-blockNumber")
           .exec(function(err, doc) {
             var last = doc.blockNumber;
-            var latest = web3.eth.blockNumber;
+            var latest = webu.huc.blockNumber;
             getLatestBlocks(latest, last);
           });
   } catch (e) {

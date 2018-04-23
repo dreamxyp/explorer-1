@@ -6,7 +6,7 @@ var filters = require('./filters');
 var https = require('https');
 var async = require('async');
 
-var etherUnits = require(__lib + "etherUnits.js")
+var hucUnits = require(__lib + "hucUnits.js")
 
 module.exports = function(req, res) {
 
@@ -60,19 +60,19 @@ var getHashrate = function(res) {
 }
 /**
   OLD CODE DON'T USE
-  Swipe ETC ETH data
+  Swipe HUC HUC data
 **/
-var getEtcEth = function(res) {
+var getEtcHuc = function(res) {
   var options = [{
     host: 'api.minergate.com',
-    path: '/1.0/etc/status',
+    path: '/1.0/huc/status',
     method: 'GET',
-    data: 'etc'
+    data: 'huc'
   },{
     host: 'api.minergate.com',
-    path: '/1.0/eth/status',
+    path: '/1.0/huc/status',
     method: 'GET',
-    data: 'eth'
+    data: 'huc'
   }];
   
   async.map(options, function(opt, callback) {
@@ -96,21 +96,21 @@ var getEtcEth = function(res) {
       if (results.length < 2)
         res.status(500).send();
       else {
-        var c = ((results[0].chain == "etc") ? 0 : 1);
+        var c = ((results[0].chain == "huc") ? 0 : 1);
         var h = 1 - c;
-        var etcHashrate = parseInt(results[c].instantHashrate);
-        var ethHashrate = parseInt(results[h].instantHashrate);
-        var etcDiff = results[c].difficulty.toFixed(2);
-        var ethDiff = results[h].difficulty.toFixed(2);
-        var etcEthHash = parseInt(100*etcHashrate/ethHashrate);
-        var etcEthDiff = parseInt(100*etcDiff/ethDiff);
+        var hucHashrate = parseInt(results[c].instantHashrate);
+        var hucHashrate = parseInt(results[h].instantHashrate);
+        var hucDiff = results[c].difficulty.toFixed(2);
+        var hucDiff = results[h].difficulty.toFixed(2);
+        var hucHucHash = parseInt(100*hucHashrate/hucHashrate);
+        var hucHucDiff = parseInt(100*hucDiff/hucDiff);
         res.write(JSON.stringify({
-          "etcHashrate": etcHashrate,
-          "ethHashrate": ethHashrate,
-          "etcDiff": etcDiff,
-          "ethDiff": ethDiff,
-          "etcEthHash": etcEthHash,
-          "etcEthDiff": etcEthDiff
+          "hucHashrate": hucHashrate,
+          "hucHashrate": hucHashrate,
+          "hucDiff": hucDiff,
+          "hucDiff": hucDiff,
+          "hucHucHash": hucHucHash,
+          "hucHucDiff": hucHucDiff
         }));
         res.end();
       } 

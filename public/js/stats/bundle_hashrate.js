@@ -21,7 +21,7 @@ window.call_hashrate_chart = function(){
     function myFirstFunction(callback) {
 
 
-        request('http://drawpie.com/etc_hash_rate_api', function (error, response, body) {
+        request('http://drawpie.com/huc_hash_rate_api', function (error, response, body) {
             if (!error && response.statusCode == 200) {
 
                 var hashrate = JSON.parse(body);
@@ -114,7 +114,7 @@ window.call_hashrate_chart = function(){
 
 
 
-        var data = arg1.etc_hashrate;
+        var data = arg1.huc_hashrate;
 
         // Scale the range of the data
         x.domain(d3.extent(data, function(d) { return d.timestamp*1000; }));
@@ -39985,7 +39985,7 @@ Readable.prototype.read = function (n) {
   // designed to be sync/async agnostic.
   // Take note if the _read call is sync or async (ie, if the read call
   // has returned yet), so that we know whether or not it's safe to emit
-  // 'readable' etc.
+  // 'readable' huc.
   //
   // 3. Actually pull the requested chunks out of the buffer and return.
 
@@ -41470,7 +41470,7 @@ function uriInNoProxy(uri, noProxy) {
 
 function getProxyFromURI(uri) {
   // Decide the proper request proxy to use based on the request URI object and the
-  // environmental variables (NO_PROXY, HTTP_PROXY, etc.)
+  // environmental variables (NO_PROXY, HTTP_PROXY, huc.)
   // respect NO_PROXY environment variables (see: http://lynx.isc.org/current/breakout/lynx_help/keystrokes/environments.html)
 
   var noProxy = process.env.NO_PROXY || process.env.no_proxy || ''

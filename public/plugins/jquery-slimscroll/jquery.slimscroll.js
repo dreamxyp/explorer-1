@@ -52,7 +52,7 @@
                 // sets rail opacity
                 railOpacity: .2,
 
-                // whether  we should use jQuery UI Draggable to enable bar dragging
+                // whhuc  we should use jQuery UI Draggable to enable bar dragging
                 railDraggable: true,
 
                 // defautlt CSS class of the slimscroll rail

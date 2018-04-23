@@ -69,31 +69,31 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
     link: function(scope, elem, attrs){
       scope.stats = {};
 
-      var etcEthURL = "/stats";
-      var etcPriceURL = "https://api.coinmarketcap.com/v1/ticker/ethereum-classic/";
-      var ethPriceURL = "https://api.coinmarketcap.com/v1/ticker/ethereum/"
-      scope.stats.ethDiff = 1;
-      scope.stats.ethHashrate = 1;
-      scope.stats.usdEth = 1;     
-      $http.post(etcEthURL, {"action": "etceth"})
+      var hucHucURL = "/stats";
+      var hucPriceURL = "https://api.coinmarketcap.com/v1/ticker/happyuc-project/";
+      var hucPriceURL = "https://api.coinmarketcap.com/v1/ticker/hucereum/"
+      scope.stats.hucDiff = 1;
+      scope.stats.hucHashrate = 1;
+      scope.stats.usdHuc = 1;     
+      $http.post(hucHucURL, {"action": "huchuc"})
        .then(function(res){
-          scope.stats.etcHashrate = res.data.etcHashrate;
-          scope.stats.ethHashrate = res.data.ethHashrate;
-          scope.stats.etcEthHash = res.data.etcEthHash;
-          scope.stats.ethDiff = res.data.ethDiff;
-          scope.stats.etcDiff = res.data.etcDiff;
-          scope.stats.etcEthDiff = res.data.etcEthDiff;
+          scope.stats.hucHashrate = res.data.hucHashrate;
+          scope.stats.hucHashrate = res.data.hucHashrate;
+          scope.stats.hucHucHash = res.data.hucHucHash;
+          scope.stats.hucDiff = res.data.hucDiff;
+          scope.stats.hucDiff = res.data.hucDiff;
+          scope.stats.hucHucDiff = res.data.hucHucDiff;
         });
-      $http.get(etcPriceURL)
+      $http.get(hucPriceURL)
        .then(function(res){
           scope.stats.usdEtc = parseFloat(res.data[0]["price_usd"]);
-          scope.stats.usdEtcEth = parseInt(100*scope.stats.usdEtc/scope.stats.usdEth);
+          scope.stats.usdEtcHuc = parseInt(100*scope.stats.usdEtc/scope.stats.usdHuc);
         });
-      $http.get(ethPriceURL)
+      $http.get(hucPriceURL)
        .then(function(res){
-          scope.stats.usdEth = parseFloat(res.data[0]["price_usd"]);
-          scope.stats.usdEtcEth = parseInt(100*scope.stats.usdEtc/scope.stats.usdEth);
-          scope.stats.ethChange = parseFloat(res.data.change);
+          scope.stats.usdHuc = parseFloat(res.data[0]["price_usd"]);
+          scope.stats.usdEtcHuc = parseInt(100*scope.stats.usdEtc/scope.stats.usdHuc);
+          scope.stats.hucChange = parseFloat(res.data.change);
         });
 
       }

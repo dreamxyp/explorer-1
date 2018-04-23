@@ -5,23 +5,23 @@
         <div class="row">
             <div class="col-md-6 center">
               <div >
-                <span class="eth-stat-title">
+                <span class="huc-stat-title">
                   {{ dao.balance | number: 10 }} </span><br>
-                <span class="eth-stat-text">
+                <span class="huc-stat-text">
                   TheDAO Balance
                   </span><br> 
                   <div class="margin-top-20">
-                  {{ dao.extra_balance | number: 10 }} <span class="eth-stat-text">TheDAO Extra Balance
+                  {{ dao.extra_balance | number: 10 }} <span class="huc-stat-text">TheDAO Extra Balance
                   </span>
                   </div>
                   <div class="margin-top-20">
-                  {{ dao.total_supply | number:1 }} <span class="eth-stat-text">Total Tokens</span>
+                  {{ dao.total_supply | number:1 }} <span class="huc-stat-text">Total Tokens</span>
                   </div>
                   <div class="margin-top-20">
-                   <span class="eth-stat-text">Token Holders</span>
+                   <span class="huc-stat-text">Token Holders</span>
                   </div>
                   <div class="margin-top-20">
-                  {{ dao.count }} <span class="eth-stat-text">Transactions</span>
+                  {{ dao.count }} <span class="huc-stat-text">Transactions</span>
                   </div>
               </div>
             </div>
@@ -34,10 +34,10 @@
                     <span class='btn grey'  ng-show="isFollowing(dao.ash)" ng-click="unFollow(dao.ash)">WATCHING <i class="fa fa-check "></i></span>
                     <div class="margin-top-20">
                         {{ dao.follow_count }}0 
-                        <span class="eth-stat-text">WATCHING</span>
+                        <span class="huc-stat-text">WATCHING</span>
                     </div>
                     <div class="margin-top-20">
-                       <span class="eth-stat-text">Contract Creator</span><br>
+                       <span class="huc-stat-text">Contract Creator</span><br>
                        <a href="/addr/0x793ea9692ada1900fbd0b80fffec6e431fe8b391">0x793ea9692ada1900fbd0b80...</a> at txn 
                        <a href="/tx/0xe9ebfecc2fa10100db51a4408d18193b3ac504584b51a4e55bdef1318f0a30f9">0xe9ebfecc2fa10100db51a44...</a>
                     </div>
@@ -83,7 +83,7 @@
                 </div><!--end row-->
                 <div class="row" ng-show="showTokens"><!-- balance results -->
                   <div class="col-md-10">
-                    <h4>You have <span class="eth-stat-title font-blue-madison">0{{dao.tokens | number}}</span> DAO-C tokens.</h4>
+                    <h4>You have <span class="huc-stat-title font-blue-madison">0{{dao.tokens | number}}</span> DAO-C tokens.</h4>
                   </div>
                 </div>
             </div><!-- end get Token Balance Tab -->

@@ -1,7 +1,7 @@
 var solc = require('solc');
 
-// var eth = require('./web3dummy').eth;
-var eth = require('./web3relay').eth;
+// var huc = require('./webudummy').huc;
+var huc = require('./weburelay').huc;
 
 var Contract = require('./contracts');
 
@@ -31,7 +31,7 @@ var compileSolc = function(req, res) {
   var optimization = (req.body.optimization) ? true : false;
   var optimise = (optimization) ? 1 : 0;
 
-  var bytecode = eth.getCode(address);
+  var bytecode = huc.getCode(address);
   if (bytecode.substring(0,2)=="0x")
     bytecode = bytecode.substring(2);
 
@@ -75,7 +75,7 @@ var compileSolc = function(req, res) {
 var testValidCode = function(output, data, bytecode, response) {
   var verifiedContracts = [];
   for (var contractName in output.contracts) {
-    // code and ABI that are needed by web3
+    // code and ABI that are needed by webu
     console.log(contractName + ': ' + output.contracts[contractName].bytecode);
     verifiedContracts.push({"name": contractName, 
                             "abi": output.contracts[contractName].interface,

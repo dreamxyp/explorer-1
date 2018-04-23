@@ -12,7 +12,7 @@ angular.module('BlocksApp').controller('BlockController', function($stateParams,
     //fetch transactions
     $http({
       method: 'POST',
-      url: '/web3relay',
+      url: '/weburelay',
       data: {"block": $scope.blockNum}
     }).success(function(data) {
       if (data.error)

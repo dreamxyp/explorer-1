@@ -611,7 +611,7 @@ Enjoy!
 					$div = ds.div;
 					$span = ds.span;
 
-					// Add focus classes, toggling, active, etc.
+					// Add focus classes, toggling, active, huc.
 					bindUi($el, $div, options);
 					bindMany($el, options, {
 						"click touchend": function () {

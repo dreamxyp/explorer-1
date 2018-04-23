@@ -1,5 +1,5 @@
 var http = require('http');
-var etherUnits = require(__lib + "etherUnits.js")
+var hucUnits = require(__lib + "hucUnits.js")
 
 module.exports = function(req, res) {
   var addr = req.body.addr;
@@ -11,7 +11,7 @@ module.exports = function(req, res) {
   var options = {
     host: 'api.blockcypher.com',
     port: '80',
-    path: '/v1/eth/main/addrs/' + addr + '/balance',
+    path: '/v1/huc/main/addrs/' + addr + '/balance',
     method: 'GET'
   };
 
@@ -20,7 +20,7 @@ module.exports = function(req, res) {
     bcRes.on('data', function (data) {
       try {
         balance = JSON.parse(data).balance;
-        balance = etherUnits.toEther( balance, "wei");
+        balance = hucUnits.toHuc( balance, "wei");
       } catch (e) {
         console.error("BC err, probably invalid addr");
       }

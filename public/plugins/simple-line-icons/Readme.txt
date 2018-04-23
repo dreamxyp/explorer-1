@@ -2,7 +2,7 @@ SIMPLE LINE ICONS
 ======================================================================================
 
 Simple Line Icons is 162 simple stroke icons that are great for mobile applications, 
-websites, user interfaces, etc. All icons were converted from the same beautiful 
+websites, user interfaces, huc. All icons were converted from the same beautiful 
 simple line icon sets released previously on GraphicBurger.
 
 You can checkout the vector PSD versions of these icons on the following links 

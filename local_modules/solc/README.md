@@ -1,9 +1,9 @@
-[![Build Status](https://travis-ci.org/ethereum/solc-js.svg?branch=master)](https://travis-ci.org/ethereum/solc-js)
+[![Build Status](https://travis-ci.org/happyuc-project/solc-js.svg?branch=master)](https://travis-ci.org/happyuc-project/solc-js)
 
 # solc-js
-JavaScript bindings for the [Solidity compiler](https://github.com/ethereum/solidity).
+JavaScript bindings for the [Solidity compiler](https://github.com/happyuc-project/solidity).
 
-Uses the Emscripten compiled Solidity found in the [solc-bin repository](https://github.com/ethereum/solc-bin).
+Uses the Emscripten compiled Solidity found in the [solc-bin repository](https://github.com/happyuc-project/solc-bin).
 
 ## Node.js Usage
 
@@ -32,7 +32,7 @@ var solc = require('solc');
 var input = 'contract x { function g() {} }';
 var output = solc.compile(input, 1); // 1 activates the optimiser
 for (var contractName in output.contracts) {
-	// code and ABI that are needed by web3
+	// code and ABI that are needed by webu
 	console.log(contractName + ': ' + output.contracts[contractName].bytecode);
 	console.log(contractName + '; ' + JSON.parse(output.contracts[contractName].interface));
 }
