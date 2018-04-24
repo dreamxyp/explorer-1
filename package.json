@@ -1,9 +1,9 @@
 {
-  "name": "HuceumClassicExplorer",
+  "name": "HappyUC Block Explorer",
   "private": false,
   "version": "0.2.0",
-  "description": "A lightweight happyuc-project classic block explorer",
-  "repository": "https://github.com/happyuc-project/explorer",
+  "description": "A lightweight HappyUC classic block explorer",
+  "repository": "https://github.com/happyucjs/happyucjs-explorer.git",
   "license": "MIT",
   "scripts": {
     "start": "concurrently \"node tools/grabber.js \" \"node app.js\" ",
@@ -27,7 +27,6 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "copyfiles": "^1.2.0",
-    "ethereumjs-testrpc": "^6.0.3",
     "mocha": "^4.1.0",
     "request": "^2.83.0"
   }
