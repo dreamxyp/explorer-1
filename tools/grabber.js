@@ -190,7 +190,7 @@ var writeTransactionsToDB = function(config, blockData) {
 var patchBlocks = function(config) {
 
     // console.log(webu);
-    var webu = new webu(new webu.currentProvider.HttpProvider('http://localhost:' + config.ghucPort.toString()));
+    var webu = new Webu(new Webu.currentProvider.HttpProvider('http://localhost:' + config.ghucPort.toString()));
 
     // number of blocks should equal difference in block numbers
     var firstBlock = 0;
