@@ -39,7 +39,6 @@ global.__lib = __dirname + '/lib/';
 
 
 // client
-
 app.get('/', function(req, res) {
   res.render('index', config);
 });
@@ -81,7 +80,7 @@ app.use(function(err, req, res, next) {
 });
 
 var http = require('http').Server(app);
-//var io = require('socket.io')(http);
+// var io = require('socket.io')(http);
 
 // webusocket(io);
 
