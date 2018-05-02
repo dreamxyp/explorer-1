@@ -1,6 +1,6 @@
 {
     "ghucPort": 8545, 
-    "blocks": [ {"start": 39325, "end": "latest"}],
+    "blocks": [ {"start": 0, "end": "latest"}],
     "quiet": false,
     "terminateAtExistingDB": false,
     "listenOnly": true,
