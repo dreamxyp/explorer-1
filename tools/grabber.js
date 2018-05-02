@@ -11,7 +11,7 @@ var Block     = mongoose.model( 'Block' );
 var Transaction     = mongoose.model( 'Transaction' );
 
 var grabBlocks = function(config) {
-    var webu = new Webu(new Webu.providers.HttpProvider('http://localhost:' + config.ghucPort.toString()));
+    var webu = new Webu(new Webu.providers.HttpProvider('http://112.74.96.198:' + config.ghucPort.toString()));
 
 
     if('listenOnly' in config && config.listenOnly === true) 

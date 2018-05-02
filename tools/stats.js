@@ -8,7 +8,7 @@ var BlockStat   = require( '../db-stats.js' ).BlockStat;
 var updateStats = function() {
 
     // console.log('Webu.providers.HttpProvider:',Webu.providers);
-    var webu = new Webu(new Webu.providers.HttpProvider('http://localhost:8545'));
+    var webu = new Webu(new Webu.providers.HttpProvider('http://112.74.96.198:8545'));
 
     mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/blockDB');
     mongoose.set('debug', true);

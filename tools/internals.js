@@ -6,7 +6,7 @@ require( '../db-internal.js' );
 
 var http = require('http');
 var Webu = require('webu');
-var webu = new webu(new webu.providers.HttpProvider("http://localhost:8545"));
+var webu = new webu(new webu.providers.HttpProvider("http://112.74.96.198:8545"));
 
 var mongoose = require( 'mongoose' );
 var InternalTx     = mongoose.model( 'InternalTransaction' );
@@ -24,7 +24,7 @@ function grabInternalTxs(batchNum, batchSize) {
     "id":' + batchNum + '}';
 
   var post_options = {
-      host: 'localhost',
+      host: '112.74.96.198',
       port: '8545',
       path: '/',
       method: 'POST',
