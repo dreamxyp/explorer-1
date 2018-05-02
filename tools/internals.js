@@ -6,7 +6,7 @@ require( '../db-internal.js' );
 
 var http = require('http');
 var Webu = require('webu');
-var webu = new webu(new Webu.providers.HttpProvider("http://112.74.96.198:8545"));
+var webu = new Webu(new Webu.providers.HttpProvider("http://112.74.96.198:8545"));
 
 var mongoose = require( 'mongoose' );
 var InternalTx     = mongoose.model( 'InternalTransaction' );
