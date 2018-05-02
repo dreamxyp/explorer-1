@@ -23,7 +23,6 @@
     "socket.io": "^2.0.4",
     "solc": "^0.4.19",
     "webu": "~1.0.10"
-    // "webu": "/Users/dreamxyp/Transcend/happyuc-project/webu.js/"
   },
   "devDependencies": {
     "chai": "^4.1.2",
